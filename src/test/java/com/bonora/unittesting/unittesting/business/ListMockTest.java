@@ -7,8 +7,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ListMockTest {
     List mock = mock(List.class);
@@ -39,5 +38,18 @@ public class ListMockTest {
         when(mock.get(anyInt())).thenReturn("gonzalo");
         assertEquals("gonzalo", mock.get(0));
         assertEquals("gonzalo", mock.get(1));
+    }
+
+    @Test
+    public void verificationBasics() {
+        mock.get(0);
+        mock.get(1);
+
+        verify(mock).get(0);
+        verify(mock, times(2)).get(anyInt());
+        verify(mock, never()).get(4);
+        verify(mock, atLeast(2)).get(anyInt());
+        verify(mock, atMost(2)).get(anyInt());
+        verify(mock, atLeastOnce()).get(0);
     }
 }
